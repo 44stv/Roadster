@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_cxemcar1-master" default="compile.module.cxemcar1-master">
+  <dirname property="module.cxemcar1-master.basedir" file="${ant.file.module_cxemcar1-master}"/>
+  
+  <property name="module.jdk.home.cxemcar1-master" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.cxemcar1-master" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.cxemcar1-master" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.cxemcar1-master" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+  
+  <property name="cxemcar1-master.output.dir" value="${module.cxemcar1-master.basedir}/out/production/CxemCar1-master"/>
+  <property name="cxemcar1-master.testoutput.dir" value="${module.cxemcar1-master.basedir}/out/test/CxemCar1-master"/>
+  
+  <path id="cxemcar1-master.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="cxemcar1-master.module.production.classpath">
+    <path refid="${module.jdk.classpath.cxemcar1-master}"/>
+  </path>
+  
+  <path id="cxemcar1-master.runtime.production.module.classpath">
+    <pathelement location="${cxemcar1-master.output.dir}"/>
+  </path>
+  
+  <path id="cxemcar1-master.module.classpath">
+    <path refid="${module.jdk.classpath.cxemcar1-master}"/>
+    <pathelement location="${cxemcar1-master.output.dir}"/>
+  </path>
+  
+  <path id="cxemcar1-master.runtime.module.classpath">
+    <pathelement location="${cxemcar1-master.testoutput.dir}"/>
+    <pathelement location="${cxemcar1-master.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.cxemcar1-master">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.cxemcar1-master">
+    <patternset refid="excluded.from.module.cxemcar1-master"/>
+  </patternset>
+  
+  <path id="cxemcar1-master.module.sourcepath">
+    <dirset dir="${module.cxemcar1-master.basedir}">
+      <include name="src"/>
+      <include name="gen"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.cxemcar1-master" depends="compile.module.cxemcar1-master.production,compile.module.cxemcar1-master.tests" description="Compile module CxemCar1-master"/>
+  
+  <target name="compile.module.cxemcar1-master.production" depends="register.custom.compilers" description="Compile module CxemCar1-master; production classes">
+    <mkdir dir="${cxemcar1-master.output.dir}"/>
+    <javac2 destdir="${cxemcar1-master.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.cxemcar1-master}/javac">
+      <compilerarg line="${compiler.args.cxemcar1-master}"/>
+      <bootclasspath refid="cxemcar1-master.module.bootclasspath"/>
+      <classpath refid="cxemcar1-master.module.production.classpath"/>
+      <src refid="cxemcar1-master.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.cxemcar1-master"/>
+    </javac2>
+    
+    <copy todir="${cxemcar1-master.output.dir}">
+      <fileset dir="${module.cxemcar1-master.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.cxemcar1-master.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.cxemcar1-master.tests" depends="register.custom.compilers,compile.module.cxemcar1-master.production" description="compile module CxemCar1-master; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.cxemcar1-master" description="cleanup module">
+    <delete dir="${cxemcar1-master.output.dir}"/>
+    <delete dir="${cxemcar1-master.testoutput.dir}"/>
+  </target>
+</project>
